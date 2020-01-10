@@ -10,7 +10,6 @@ const app = express();
 
 // set headers to allow cors
 app.use((req, res, next) => {
-
     res.header('Access-Control-Allow-Origin', '*'); // replace localhost with actual host
     res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, PUT, PATCH, POST, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Authorization');
@@ -22,12 +21,7 @@ app.use((req, res, next) => {
 
     next(); // move to the next middleware
 });
-
-/* middlewares */
-app.use(express.static(path.join(__dirname, 'public'))); // configure url for static folder
-/* app.get('*', (req, res) => {
-    return res.sendFile(path.join(__dirname, 'public/index.html'));
-}); */
+app.use(cors());
 
 // configure bodyParser middleware
 app.use(bodyParser.urlencoded({
