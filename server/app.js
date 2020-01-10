@@ -8,6 +8,15 @@ const path = require('path');
 
 const app = express();
 
+const userRoutes = require('./routes/users');
+const contactRoutes = require('./routes/contacts');
+
+// configure bodyParser middleware
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(bodyParser.json());
+
 // set headers to allow cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // replace localhost with actual host
@@ -23,11 +32,9 @@ app.use((req, res, next) => {
 });
 app.use(cors());
 
-// configure bodyParser middleware
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-app.use(bodyParser.json());
+// create routes
+app.use('api/v1/contacts', contactRoutes);
+app.use('api/v1/users', userRoutes);
 
 // middleware to handle 404 errors
 app.use((req, res, next) => {
