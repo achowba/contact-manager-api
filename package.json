@@ -1,0 +1,28 @@
+{
+  "name": "contact-manager-api",
+  "version": "1.0.0",
+  "description": "Addenda REST API Task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achowba/contact-manager-api.git"
+  },
+  "keywords": [
+    "addenda",
+    "rest-api",
+    "rest",
+    "api",
+    "node",
+    "express",
+    "contact-manager"
+  ],
+  "author": "achowba",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/achowba/contact-manager-api/issues"
+  },
+  "homepage": "https://github.com/achowba/contact-manager-api#readme"
+}
