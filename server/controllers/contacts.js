@@ -11,20 +11,32 @@ exports.createContact = async (req, res, next) => {
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
             contactImage: req.body.contactImage,
-            createdOn: req.body.createdOn,
-            createdBy: req.body.createdBy,
+            createdOn: new Date().toISOString(),
+            createdBy: req.userData.userId,
         });
 
         let newContact = await contact.save();
 
         res.status(201).json({
             status: "success",
-            newContact
+            created: true,
+            newContact: {
+                _id: newContact._id,
+                firstName: newContact.firstName,
+                lastName: newContact.lastName,
+                phoneNumber: newContact.phoneNumber,
+                email: newContact.email,
+                contactImage: newContact.contactImage,
+                createdOn: newContact.createdOn,
+                modifiedOn: newContact.modifiedOn,
+                createdBy: newContact.createdBy,
+            }
         });
 
     } catch (err) {
         res.status(404).json({
             status: "error",
+            created: false,
             err: err.message
         });
     }
@@ -32,9 +44,7 @@ exports.createContact = async (req, res, next) => {
 
 exports.getAllContacts = async (req, res, next) => {
     try {
-        let contacts = await Contact.find({
-            // createdBy: req.headers['x-current-user']
-        });
+        let contacts = await Contact.find({}).select('_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage').sort('createdOn');
 
         if (!contacts) {
             return res.status(404).json({
@@ -58,9 +68,10 @@ exports.getAllContacts = async (req, res, next) => {
 }
 
 exports.getContact = async (req, res, next) => {
+    let contactId = req.params.contactId;
+    let contact = await Contact.findById(contactId).select('_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage').sort('createdOn');
+
     try {
-        let contactId = req.params._id;
-        let contact = await Contact.findById(contactId);
 
         if (!contact) {
             return res.status(404).json({
@@ -84,12 +95,17 @@ exports.getContact = async (req, res, next) => {
 
 exports.editContact = async (req, res, next) => {
 
-	let contactId = req.params._id;
+	let contactId = req.params.contactId;
 	let updateInfo = {}
 
-	for (info of req.body) {
-		updateInfo[info.propName.toString()] = req.value;
+	for (info of Object.keys(req.body)) {
+        updateInfo[info] = req.body[info];
 	}
+
+    updateInfo = {
+        ...updateInfo,
+        modifiedOn: new Date().toISOString(),
+    }
 
 	try {
 
@@ -100,13 +116,25 @@ exports.editContact = async (req, res, next) => {
 		});
 
 		res.status(200).json({
-			status: "success",
-			editedContact
+            status: "success",
+            edited: true,
+			editedContact: {
+                _id: updateInfo._id,
+                firstName: updateInfo.firstName,
+                lastName: updateInfo.lastName,
+                phoneNumber: updateInfo.phoneNumber,
+                email: updateInfo.email,
+                contactImage: updateInfo.contactImage,
+                createdOn: updateInfo.createdOn,
+                modifiedOn: updateInfo.modifiedOn,
+                createdBy: updateInfo.createdBy,
+            }
 		});
 
 	} catch (err) {
 		res.status(404).json({
-			status: "error",
+            status: "error",
+            edited: false,
 			err: err.message
 		});
 	}
@@ -115,8 +143,8 @@ exports.editContact = async (req, res, next) => {
 exports.deleteContact = async (req, res, next) => {
 	try {
 
-		let contactId = req.params._id;
-		let deletedContact = Contact.findByIdAndDelete({
+		let contactId = req.params.contactId;
+		let deletedContact = await Contact.findByIdAndDelete({
 			_id: contactId
 		});
 
@@ -128,12 +156,14 @@ exports.deleteContact = async (req, res, next) => {
 		}
 
 		res.status(200).json({
-			status: "success",
+            status: "success",
+            deleted: true,
 			deletedContact
 		});
-	} catch (error) {
+	} catch (err) {
 		res.status(404).json({
-			status: "error",
+            status: "error",
+            deleted: false,
 			err: err.message
 		});
 	}

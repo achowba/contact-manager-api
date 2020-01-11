@@ -7,11 +7,11 @@ const contactSchema = mongoose.Schema({
         required: true
     },
     lastName: {
-        type: Number,
+        type: String,
         required: true
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         required: true,
         unique: true
     },
@@ -22,18 +22,20 @@ const contactSchema = mongoose.Schema({
     },
     contactImage: {
         type: String,
-        required: false,
-        default: process.env.DEFAULT_CONTACT_IMAGE
+        default: process.env.DEFAULT_CONTACT_IMAGE_URL
     },
     createdOn: {
         type: String,
-        required: false,
+        default: new Date().toISOString()
+    },
+    modifiedOn: {
+        type: String,
         default: new Date().toISOString()
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: false,
+        required: true,
     }
 });
 
