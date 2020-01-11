@@ -10,7 +10,7 @@ function validateContact (contact) {
         email: Joi.string().min(6).required,
         contactImage: Joi.string(),
         createdOn: Joi.string(),
-        createdBy: Joi.objectId().required(),
+        createdBy: Joi.objectId(),
     }
 
     return Joi.validate(contact, contactSchema);
