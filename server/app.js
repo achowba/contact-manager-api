@@ -7,7 +7,7 @@ const cors = require('cors');
 
 const app = express();
 
-// const userRoutes = require('./routes/users');
+const userRoutes = require('./routes/users');
 const contactRoutes = require('./routes/contacts');
 
 // configure bodyParser middleware
@@ -33,7 +33,7 @@ app.use(cors());
 
 // create routes
 app.use('/api/v1/contacts', contactRoutes);
-// app.use('api/v1/users', userRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // middleware to handle 404 errors
 app.use((req, res, next) => {

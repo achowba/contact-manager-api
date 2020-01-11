@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 // function to hash user password
 async function hashPassword (password) {
-    const saltRounds = process.env.BCRYPT_SALT_ROUNDS;
+    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS);
 
     const hashedPassword = await new Promise((resolve, reject) => {
         bcrypt.hash(password, saltRounds, function(err, hash) {
@@ -48,5 +48,4 @@ module.exports = {
     hashPassword,
     comparePassword,
     authenticateUser,
-    checkAuthStatus
 };
