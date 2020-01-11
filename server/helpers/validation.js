@@ -24,16 +24,16 @@ function validateUser(user) {
         password: Joi.string().min(6).max(50).required(),
     }
 
-    return Joi.validate(contact, contactSchema);
+    return Joi.validate(user, userSchema);
 }
 
-function validateUserLogin(user) {
+function validateUserLogin(userLogin) {
     const userSchema = {
         email: Joi.string().min(6).max(50).required(),
         password: Joi.string().min(6).max(50).required(),
     }
 
-    return Joi.validate(contact, contactSchema);
+    return Joi.validate(userLogin, userSchema);
 }
 
 module.exports = {
