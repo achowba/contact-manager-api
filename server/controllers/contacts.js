@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 
 const Contact = require('./../models/contact');
 const { validateContact } = require('./../helpers/validation');
+const { deleteContactImage } = require('./../helpers/fileupload');
 
+// create a new contact
 exports.createContact = async (req, res, next) => {
+    let newContact = '';
     try {
-
+        let contactImagePath = req.file ? req.file.path : req.body.contactImage;
         const { error } = validateContact(req.body);
 
         const contact = new Contact({
@@ -14,12 +17,12 @@ exports.createContact = async (req, res, next) => {
             lastName: req.body.lastName,
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
-            contactImage: req.body.contactImage,
+            contactImage: contactImagePath,
             createdOn: new Date().toISOString(),
             createdBy: req.userData.userId,
         });
 
-        let newContact = await contact.save();
+        newContact = await contact.save();
 
         res.status(201).json({
             status: "success",
@@ -38,6 +41,8 @@ exports.createContact = async (req, res, next) => {
         });
 
     } catch (err) {
+        if (req.file) deleteContactImage(req.file.path); // if an error occurs and an image was uploaded, delete the image
+
         res.status(404).json({
             status: "error",
             created: false,
@@ -46,6 +51,7 @@ exports.createContact = async (req, res, next) => {
     }
 }
 
+// get all contact
 exports.getAllContacts = async (req, res, next) => {
 
     let { limit, page } = req.query;
@@ -66,9 +72,12 @@ exports.getAllContacts = async (req, res, next) => {
         }
 
         res.status(200).json({
-            /* status: "success",
-            count: contacts.length, */
-            contacts
+            status: "success",
+            contacts,
+            // total: contacts.total,
+            // limit: contacts.limit,
+            // page: contacts.page,
+            // pages: contacts.pages
         });
 
     } catch (err) {
@@ -79,6 +88,7 @@ exports.getAllContacts = async (req, res, next) => {
     }
 }
 
+// get a contact by id
 exports.getContact = async (req, res, next) => {
     let contactId = req.params.contactId;
     let contact = await Contact.findById(contactId).select('_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage').sort('createdOn');
@@ -105,6 +115,7 @@ exports.getContact = async (req, res, next) => {
     }
 }
 
+// edit a contact
 exports.editContact = async (req, res, next) => {
 
 	let contactId = req.params.contactId;
@@ -152,6 +163,7 @@ exports.editContact = async (req, res, next) => {
 	}
 }
 
+// delete a contact
 exports.deleteContact = async (req, res, next) => {
 	try {
 
@@ -167,6 +179,7 @@ exports.deleteContact = async (req, res, next) => {
 			});
 		}
 
+        deleteContactImage(deletedContact.contactImage);
 		res.status(200).json({
             status: "success",
             deleted: true,
