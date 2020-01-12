@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const contactSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -39,4 +40,5 @@ const contactSchema = mongoose.Schema({
     }
 });
 
+contactSchema.plugin(mongoosePaginate); // add pagination plugin to schema
 module.exports = mongoose.model('Contact', contactSchema);

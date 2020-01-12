@@ -47,8 +47,18 @@ exports.createContact = async (req, res, next) => {
 }
 
 exports.getAllContacts = async (req, res, next) => {
+
+    let { limit, page } = req.query;
+    console.log(req.query);
+    const paginationOptions = {
+        select: "_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage",
+        limit: parseInt(limit) || 5,
+        page: parseInt(page) || 1,
+    }
+
     try {
-        let contacts = await Contact.find({}).select('_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage').sort('createdOn');
+        // let contacts = await Contact.find({}).select('_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage').sort('createdOn');
+        let contacts = await Contact.paginate({}, paginationOptions);
 
         if (!contacts) {
             return res.status(404).json({
@@ -58,8 +68,8 @@ exports.getAllContacts = async (req, res, next) => {
         }
 
         res.status(200).json({
-            status: "success",
-            count: contacts.length,
+            /* status: "success",
+            count: contacts.length, */
             contacts
         });
 
