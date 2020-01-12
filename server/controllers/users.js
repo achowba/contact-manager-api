@@ -2,11 +2,15 @@ const mongoose = require('mongoose');
 
 const User = require('./../models/user');
 const { authenticateUser, comparePassword, hashPassword } = require('./../helpers/auth');
+const { validateUser, validateUserLogin } = require('./../helpers/validation');
 
 // create a new user
 exports.registerUser = async (req, res, next) => {
 
     try {
+
+        const { error } = validateUser(req.body);
+
         let hashedPassword = await hashPassword(req.body.password);
         let existingUser = await User.find({
             email: req.body.email,
@@ -40,8 +44,8 @@ exports.registerUser = async (req, res, next) => {
         console.log(err);
         return res.status(400).json({
             status: "error",
+            registered: false,
             error: err.message
-            //error: "Failed to Create User.",
         });
     }
 }
@@ -50,22 +54,33 @@ exports.registerUser = async (req, res, next) => {
 exports.loginUser = async (req, res, next) => {
 
     try {
+
+        const { error } = validateUserLogin(req.body);
+
         let email = req.body.email;
         let password = req.body.password;
-
         let user = await User.find({
             email
         });
 
-        let userPassword = await comparePassword(password, user[0].password);
-        let token = authenticateUser(user[0].email, user[0]._id);
 
-        if (!user || user.length == 0 || !userPassword) {
+        if (!user || user.length == 0) {
             return res.status(400).json({
                 status: "error",
-                error: "Wrong Password or Email.",
+                error: "The email entered doesn't exist on our records",
             });
         }
+
+        let userPassword = await comparePassword(password, user[0].password);
+
+        if (!userPassword) {
+            return res.status(400).json({
+                status: "error",
+                error: "Wrong password or email.",
+            });
+        }
+
+        let token = authenticateUser(user[0].email, user[0]._id);
 
         return res.status(200).json({
             status: "success",

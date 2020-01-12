@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
 const Contact = require('./../models/contact');
+const { validateContact } = require('./../helpers/validation');
 
 exports.createContact = async (req, res, next) => {
     try {
+
+        const { error } = validateContact(req.body);
+
         const contact = new Contact({
             _id: new mongoose.Types.ObjectId(),
             firstName: req.body.firstName,
