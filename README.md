@@ -1,6 +1,6 @@
 # contact-manager-api
 
-This is the documentation for REST API Task by Addenda.
+This is a guide for REST API Task by Addenda.
 
 # Table of Contents
 1. [Getting Started](#getting-started)
@@ -26,6 +26,8 @@ This is the documentation for REST API Task by Addenda.
     - [Editing a Contact](#edit-contact)
 
     - [Deleting a Contact](#delete-contact)
+    
+6. [Helpful Links](#helpful-links)
 
 
 
@@ -55,35 +57,156 @@ npm run test
 
 ## Users<a name="users"/>
 
-This is the endpoint for all operations regarding the users section 
+This is the endpoint for all operations regarding the users.
 
 ```
 /api/v1/users
 ```
 
+List of supported methods
+
+- POST
+
+### Registering a User<a name="register"/>
+
+<u>Endpoint</u>
+
+```javascript
+POST /api/v1/users/register
+```
+
+<u>Request Body</u>
+
+```json
+{
+	"username": "ironman",
+    "email": "stark@avenger.com"
+	"password": "iamironman"
+}
+```
 
 
-#### Registering a User<a name="register"/>
 
-#### Login a User<a name="login"/>
+
+
+### Login a User<a name="login"/>
+
+<u>Endpoint</u>
+
+```javascript
+POST /api/v1/users/login
+```
+
+<u>Request Body</u>
+
+```json
+{
+    "email": "stark@avenger.com"
+	"password": "iamironman"
+}
+```
+
+
+
+
 
 ## Contacts<a name="contacts"/>
 
-```
-/api/v1/contacts
-```
-
-
-
 #### Adding a Contact<a name="add-contact"/>
+
+<u>Endpoint</u>
+
+```javascript
+POST /api/v1/contacts/add
+```
+
+Request Body
+
+```json
+{
+	"firstName": "Steve",
+	"lastName": "Rogers",
+	"phoneNumber": "673287239",
+	"email": "steve@avengers.com"
+}
+```
+
+
+
+
 
 #### Getting all Contacts<a name="get-contacts"/>
 
+<u>Endpoint</u>
+
+```javascript
+GET /api/v1/contacts
+```
+
+
+
+
+
 #### Pagination<a name="pagination"/>
+
+The [get all contacts](#get-contacts) route supports pagination and this is how it is used.
+
+<u>URL Query parameters</u>
+
+```javascript
+limit = number of contacts to retrieve per page, default is 5
+page = the page to get, default is 1
+sortBy = the property of the contact by which the results can be sorted, default is "firstName"
+```
+
+<u>Usage</u>
+
+```javascript
+GET /api/v1/contacts?limit=5&sortBy=lastName&page=1
+```
+
+
 
 #### Get a Contact<a name="get-contact"/>
 
+<u>Endpoint</u>
+
+```javascript
+GET /api/v1/contacts/:contactId
+```
+
+
+
 #### Editing a Contact<a name="edit-contact"/>
+
+<u>Endpoint</u>
+
+```javascript
+PATCH /api/v1/contacts/edit/:contactId
+```
+
+<u>Request Body</u>
+
+```json
+{
+    "phoneNumber": "newphoneNumber",
+    "email": "newEmail",
+}
+```
+
+
 
 #### Deleting a Contact<a name="delete-contact"/>
 
+<u>Endpoint</u>
+
+```javascript
+DELETE /api/v1/contacts/delete/:contactId
+```
+
+
+
+## Helpful Links<a name="helpful-links"/>
+
+- [Getting started with Postman](#https://youtu.be/t5n07Ybz7yI)
+- [How to upload file via Postman](#https://youtu.be/c07IsbSNqfI)
