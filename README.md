@@ -9,25 +9,27 @@ This is a guide for REST API Task by Addenda.
 
 3. [Running the Tests](#tests)
 
-4. [Users](#users)
+4. [Running the Project](#run-project)
+
+5. [Users](#users)
 
     - [Registering a User](#register)
 
     - [Login a User](#login)
 
-5. [Contacts](#contacts)
+6. [Contacts](#contacts)
 
     - [Adding a Contact](#add-contact)
 
     - [Getting all Contacts](#get-contacts)
-    - [Pagination](#pagination)
+        - [Pagination](#pagination)
     - [Get a Contact](#get-contact)
 
     - [Editing a Contact](#edit-contact)
 
     - [Deleting a Contact](#delete-contact)
-    
-6. [Helpful Links](#helpful-links)
+
+7. [Helpful Links](#helpful-links)
 
 
 
@@ -41,7 +43,7 @@ git clone https://github.com/achowba/contact-manager-api.git
 
 ## Adding the **.env** file<a name=".env-file"/>
 
-The **.env** file contains the list of the environment variables used in this project. You can create yours and add the value of the environment variables as shown in the image below:
+The **.env** file contains the list of the environment variables used in this project. If you have been given the **.env** file, add it to the root folder of the project. You can create yours and add the values of the environment variables as shown in the image below:
 
 ![.env file](https://res.cloudinary.com/achowba/image/upload/v1578864533/addenda-task/env_file.png)
 
@@ -54,6 +56,14 @@ npm run test
 ```
 
 
+
+## Running the Project<a name="run-project"/>
+
+```
+npm start
+```
+
+Running the above command in the terminal should start the project in port 3600
 
 ## Users<a name="users"/>
 
@@ -80,7 +90,7 @@ POST /api/v1/users/register
 ```json
 {
 	"username": "ironman",
-    "email": "stark@avenger.com"
+    "email": "stark@avenger.com",
 	"password": "iamironman"
 }
 ```
@@ -101,7 +111,7 @@ POST /api/v1/users/login
 
 ```json
 {
-    "email": "stark@avenger.com"
+    "email": "stark@avenger.com",
 	"password": "iamironman"
 }
 ```
@@ -190,7 +200,7 @@ PATCH /api/v1/contacts/edit/:contactId
 ```json
 {
     "phoneNumber": "newphoneNumber",
-    "email": "newEmail",
+    "email": "newEmail"
 }
 ```
 
