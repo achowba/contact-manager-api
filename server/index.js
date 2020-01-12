@@ -9,8 +9,10 @@ if (process.env.NODE_ENV == 'test') {
 }
 
 app.set('port', port);
-app.listen(app.get('port'), function() {
-    console.log( `Server is running on Port: ${app.get('port')}`);
-});
+if(!module.parent) {
+    app.listen(app.get('port'), function() {
+        console.log( `Server is running on Port: ${app.get('port')}`);
+    });
+}
 
 module.exports = app;

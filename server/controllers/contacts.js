@@ -54,11 +54,12 @@ exports.createContact = async (req, res, next) => {
 // get all contact
 exports.getAllContacts = async (req, res, next) => {
 
-    let { limit, page } = req.query;
+    let { limit, page, sortBy } = req.query;
     let paginationOptions = {
         select: "_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage",
         limit: parseInt(limit) || 5,
         page: parseInt(page) || 1,
+        sort: sortBy || "firstName", // sort by firstName is ascending order
     }
 
     try {
@@ -74,10 +75,6 @@ exports.getAllContacts = async (req, res, next) => {
         res.status(200).json({
             status: "success",
             contacts,
-            // total: contacts.total,
-            // limit: contacts.limit,
-            // page: contacts.page,
-            // pages: contacts.pages
         });
 
     } catch (err) {
@@ -90,10 +87,10 @@ exports.getAllContacts = async (req, res, next) => {
 
 // get a contact by id
 exports.getContact = async (req, res, next) => {
-    let contactId = req.params.contactId;
-    let contact = await Contact.findById(contactId).select('_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage').sort('createdOn');
 
     try {
+        let contactId = req.params.contactId;
+        let contact = await Contact.findById(contactId).select('_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage').sort('createdOn');
 
         if (!contact) {
             return res.status(404).json({
