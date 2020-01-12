@@ -57,7 +57,6 @@ exports.getAllContacts = async (req, res, next) => {
     }
 
     try {
-        // let contacts = await Contact.find({}).select('_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage').sort('createdOn');
         let contacts = await Contact.paginate({}, paginationOptions);
 
         if (!contacts) {
