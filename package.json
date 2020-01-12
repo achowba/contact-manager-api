@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "start-dev": "nodemon server/index.js",
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/tests/index.js --timeout 10000",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/tests/index.js --timeout 10000 --exit",
     "watch-test": "nodemon --exec \"npm run test\""
   },
   "repository": {
