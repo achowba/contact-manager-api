@@ -3,6 +3,7 @@
 This is a guide for REST API Task by Addenda.
 
 # Table of Contents
+
 1. [Getting Started](#getting-started)
 
 2. [Adding the **.env** file](#.env-file)
@@ -31,8 +32,6 @@ This is a guide for REST API Task by Addenda.
 
 7. [Helpful Links](#helpful-links)
 
-
-
 ## Getting Started<a name="getting-started"/>
 
 Clone the repository to your local machine and the open **command prompt/terminal** in the root folder of this project.
@@ -55,8 +54,6 @@ To run the tests for this project, type the code below in the terminal (which is
 npm run test
 ```
 
-
-
 ## Running the Project<a name="run-project"/>
 
 ```
@@ -75,36 +72,32 @@ This is the endpoint for all operations regarding the users.
 
 List of supported methods
 
-- POST
+-   POST
 
 ### Registering a User<a name="register"/>
 
 <u>Endpoint</u>
 
 ```javascript
-POST /api/v1/users/register
+POST / api / v1 / users / register;
 ```
 
 <u>Request Body</u>
 
 ```json
 {
-	"username": "ironman",
+    "username": "ironman",
     "email": "stark@avenger.com",
-	"password": "iamironman"
+    "password": "iamironman"
 }
 ```
-
-
-
-
 
 ### Login a User<a name="login"/>
 
 <u>Endpoint</u>
 
 ```javascript
-POST /api/v1/users/login
+POST / api / v1 / users / login;
 ```
 
 <u>Request Body</u>
@@ -112,13 +105,9 @@ POST /api/v1/users/login
 ```json
 {
     "email": "stark@avenger.com",
-	"password": "iamironman"
+    "password": "iamironman"
 }
 ```
-
-
-
-
 
 ## Contacts<a name="contacts"/>
 
@@ -127,35 +116,27 @@ POST /api/v1/users/login
 <u>Endpoint</u>
 
 ```javascript
-POST /api/v1/contacts/add
+POST / api / v1 / contacts / add;
 ```
 
 Request Body
 
 ```json
 {
-	"firstName": "Steve",
-	"lastName": "Rogers",
-	"phoneNumber": "673287239",
-	"email": "steve@avengers.com"
+    "firstName": "Steve",
+    "lastName": "Rogers",
+    "phoneNumber": "673287239",
+    "email": "steve@avengers.com"
 }
 ```
-
-
-
-
 
 #### Getting all Contacts<a name="get-contacts"/>
 
 <u>Endpoint</u>
 
 ```javascript
-GET /api/v1/contacts
+GET / api / v1 / contacts;
 ```
-
-
-
-
 
 #### Pagination<a name="pagination"/>
 
@@ -175,8 +156,6 @@ sortBy = the property of the contact by which the results can be sorted, default
 GET /api/v1/contacts?limit=5&sortBy=lastName&page=1
 ```
 
-
-
 #### Get a Contact<a name="get-contact"/>
 
 <u>Endpoint</u>
@@ -184,8 +163,6 @@ GET /api/v1/contacts?limit=5&sortBy=lastName&page=1
 ```javascript
 GET /api/v1/contacts/:contactId
 ```
-
-
 
 #### Editing a Contact<a name="edit-contact"/>
 
@@ -204,8 +181,6 @@ PATCH /api/v1/contacts/edit/:contactId
 }
 ```
 
-
-
 #### Deleting a Contact<a name="delete-contact"/>
 
 <u>Endpoint</u>
@@ -214,9 +189,7 @@ PATCH /api/v1/contacts/edit/:contactId
 DELETE /api/v1/contacts/delete/:contactId
 ```
 
-
-
 ## Helpful Links<a name="helpful-links"/>
 
-- [Getting started with Postman](#https://youtu.be/t5n07Ybz7yI)
-- [How to upload file via Postman](#https://youtu.be/c07IsbSNqfI)
+-   [Getting started with Postman](#https://youtu.be/t5n07Ybz7yI)
+-   [How to upload file via Postman](#https://youtu.be/c07IsbSNqfI)
