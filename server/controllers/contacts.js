@@ -49,8 +49,7 @@ exports.createContact = async (req, res, next) => {
 exports.getAllContacts = async (req, res, next) => {
 
     let { limit, page } = req.query;
-    console.log(req.query);
-    const paginationOptions = {
+    let paginationOptions = {
         select: "_id firstName lastName phoneNumber email createdOn createdBy modifiedOn contactImage",
         limit: parseInt(limit) || 5,
         page: parseInt(page) || 1,
