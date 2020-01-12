@@ -3,22 +3,24 @@
 This is the documentation for REST API Task by Addenda.
 
 # Table of Contents
-1. [Getting Started](#gettingstarted)
+1. [Getting Started](#getting-started)
 
 2. [Adding the **.env** file](#.env-file)
 
 3. [Running the Tests](#tests)
 
 4. [Users](#users)
-- [Registering a User](#register)
+
+    - [Registering a User](#register)
+
     - [Login a User](#login)
-    
+
 5. [Contacts](#contacts)
 
     - [Adding a Contact](#add-contact)
 
     - [Getting all Contacts](#get-contacts)
-
+    - [Pagination](#pagination)
     - [Get a Contact](#get-contact)
 
     - [Editing a Contact](#edit-contact)
@@ -27,7 +29,7 @@ This is the documentation for REST API Task by Addenda.
 
 
 
-## Getting Started
+## Getting Started<a name="getting-started"/>
 
 Clone the repository to your local machine and the open **command prompt/terminal** in the root folder of this project.
 
@@ -51,17 +53,33 @@ npm run test
 
 
 
-## Users
+## Users<a name="users"/>
+
+This is the endpoint for all operations regarding the users section 
+
+```
+/api/v1/users
+```
+
+
 
 #### Registering a User<a name="register"/>
 
 #### Login a User<a name="login"/>
 
-## Contacts
+## Contacts<a name="contacts"/>
+
+```
+/api/v1/contacts
+```
+
+
 
 #### Adding a Contact<a name="add-contact"/>
 
 #### Getting all Contacts<a name="get-contacts"/>
+
+#### Pagination<a name="pagination"/>
 
 #### Get a Contact<a name="get-contact"/>
 
