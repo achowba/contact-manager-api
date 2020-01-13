@@ -6,8 +6,8 @@ const { deleteContactImage } = require('./../helpers/fileupload');
 
 // create a new contact
 exports.createContact = async (req, res, next) => {
-    let newContact = '';
     try {
+        let newContact = '';
         let contactImagePath = req.file ? req.file.path : req.body.contactImage;
         const { error } = validateContact(req.body);
 
@@ -23,6 +23,16 @@ exports.createContact = async (req, res, next) => {
         });
 
         newContact = await contact.save();
+
+        if (!newContact) {
+            deleteContactImage(req.file.path); // if an error occurs and an image was uploaded, delete the image
+
+            res.status(409).json({
+                status: "error",
+                created: false,
+                err: "Failed to Create Contact. Please try again."
+            });
+        }
 
         res.status(201).json({
             status: "success",
@@ -120,7 +130,7 @@ exports.editContact = async (req, res, next) => {
 
 	for (info of Object.keys(req.body)) {
         updateInfo[info] = req.body[info];
-	}
+    }
 
     updateInfo = {
         ...updateInfo,
@@ -133,7 +143,14 @@ exports.editContact = async (req, res, next) => {
 			_id: contactId
 		}, {
 			$set: updateInfo
-		});
+        });
+
+        if (!editedContact) {
+            return res.status(404).json({
+                status: "error",
+                error: "Contact Not Found",
+            });
+        }
 
 		res.status(200).json({
             status: "success",
@@ -149,7 +166,7 @@ exports.editContact = async (req, res, next) => {
                 modifiedOn: updateInfo.modifiedOn,
                 createdBy: updateInfo.createdBy,
             }
-		});
+        });
 
 	} catch (err) {
 		res.status(404).json({
