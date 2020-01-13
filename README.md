@@ -21,7 +21,7 @@ This is a guide for REST API Task by Addenda.
 6. [Contacts](#contacts)
 
     - [Adding a Contact](#add-contact)
-
+        - [Uploading a contact's image](#upload-image)
     - [Getting all Contacts](#get-contacts)
         - [Pagination](#pagination)
     - [Get a Contact](#get-contact)
@@ -109,14 +109,29 @@ POST / api / v1 / users / login;
 }
 ```
 
+After signing in a user, a token is returned in the response body which can now be used to make requests to the contacts endpoint.
+
 ## Contacts<a name="contacts"/>
+
+Requests to the contacts routes are authenticated and a token is needed to allow users make requests to the contacts endpoint. The token is returned in the response body after the user logs in. This is how the token is used in the request header to make requests to the contacts endpoint.
+
+```javascript
+Key: Authorization
+Value: Bearer {{YOUR_TOKEN_GOES_HERE}}
+```
+
+The [Helpful Links](#helpful-links) section contains resources on getting started with Postman.
+
+#### Uploading a Contact's Image<a name="upload-image"/>
+
+When adding a contact, a contact's image can be uploaded in place of the default image provided. This upload is done by sending the request as a multipart/form-data. The [Helpful Links](#helpful-links) section contains a link to making multipart/form-data requests via postman.
 
 #### Adding a Contact<a name="add-contact"/>
 
 <u>Endpoint</u>
 
 ```javascript
-POST / api / v1 / contacts / add;
+POST /api/v1/contacts/add;
 ```
 
 Request Body
@@ -135,7 +150,7 @@ Request Body
 <u>Endpoint</u>
 
 ```javascript
-GET / api / v1 / contacts;
+GET /api/v1/contacts;
 ```
 
 #### Pagination<a name="pagination"/>
@@ -193,3 +208,5 @@ DELETE /api/v1/contacts/delete/:contactId
 
 -   [Getting started with Postman](#https://youtu.be/t5n07Ybz7yI)
 -   [How to upload file via Postman](#https://youtu.be/c07IsbSNqfI)
+-   [Using Postman for API Requests](#https://support.brightcove.com/use-postman-api-requests)
+-   [Sending multipart/form-data requests via Postman](#https://www.youtube.com/watch?v=3vqvZmP28KE)
