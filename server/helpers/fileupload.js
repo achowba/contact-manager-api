@@ -1,14 +1,36 @@
 const multer = require('multer');
-const fsp = require('fs').promises;
+const fs = require('fs');
+
+const fsp = fs.promises;
+let imageStoragePath = "./server/uploads";
 
 const storageStrategy = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, './server/uploads');
+        createFolder(imageStoragePath);
+        cb(null, imageStoragePath);
     },
     filename: function(req, file, cb) {
-        cb(null, `image_${new Date().getTime()}_${file.originalname}`);
+        // cb(null, `image_${new Date().getTime()}_${file.originalname}`);
+        // cb(null, `image_${new Date().getTime()}_${req.body.firstName}_${req.userData.userId}.${getImageExtension(file)}`);
+        cb(null, generateImageName(req, file));
     },
 });
+
+const getImageExtension = (imageFile) => {
+    return imageFile.mimetype.split('/')[1];
+}
+
+const createFolder = (folderName) => {
+    if (!fs.existsSync(folderName)){
+        fs.mkdirSync(folderName);
+    }
+}
+
+const generateImageName = (req, file) => {
+    let contactImageName = `image_${new Date().getTime()}_${req.body.firstName}_${req.userData.userId}.${getImageExtension(file)}`;
+    console.log(contactImageName);
+    return contactImageName;
+}
 
 const fileFilter = (req, file, cb) => {
     // reject a file if filetype is not allowed
